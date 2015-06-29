@@ -1,0 +1,21 @@
+{
+  "name": "template blog materialize",
+  "version": "1.0.0",
+  "authors": [
+    "nordcap <budaevaa@mail.ru>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "latest",
+    "jquery": "~2.1.4"
+  }
+}
