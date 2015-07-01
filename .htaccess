@@ -7,8 +7,8 @@ AddType application/x-font-opentype .otf
 AddType application/x-font-woff .woff
 AddType image/svg+xml .svg
 
-# Compress compressible fonts
-AddOutputFilterByType DEFLATE application/x-font-ttf application/x-font-opentype image/svg+xml
+# Compress compressible fonts, text, html, javascript, css, xml
+AddOutputFilterByType DEFLATE application/x-font-ttf application/x-font-opentype image/svg+xml text/html text/plain text/xml application/xml application/xhtml+xml text/css text/javascript application/javascript application/x-javascript
 
 ExpiresActive On
 ExpiresDefault "access plus 5 seconds"
@@ -66,3 +66,4 @@ ExpiresByType application/xhtml+xml "access plus 600 seconds"
       Header append Vary Accept-Encoding
     </FilesMatch>
 </IfModule>
+
