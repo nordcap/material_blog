@@ -21,25 +21,52 @@ var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
 
 
+var path = {
+    dist: {
+        html:'./dist/',
+        js:'./dist/js/',
+        css:'./dist/css/',
+        img:'./dist/img/',
+        fonts:'./dist/font/',
+        php:'./dist/'
+    },
+    app:{
+        html:'./app/*.html',
+        js:'./app/js/main.js',
+        scss:'./app/sass/main.scss',
+        img:'./app/img/**/*.*',
+        fonts:'./app/font/**/*.*',
+        php:'./app/*.php'
+    },
+    watch:{
+        html:'./app/**/*.html',
+        js:'./app/js/**/*.js',
+        scss:'./app/sass/**/*.scss',
+        img:'./app/img/**/*.*',
+        fonts:'./app/font/**/*.*'
+    },
+    clean:'./dist'
+};
+
 //copy img files
 gulp.task('copyimg', function(){
-    return gulp.src('./app/img/**/*')
+    return gulp.src(path.app.img)
         .pipe(imagemin({
             progressive: true
         }))
-        .pipe(gulp.dest('./dist/img/'))
+        .pipe(gulp.dest(path.dist.img))
 });
 
 //copy font files
 gulp.task('copyfont', function(){
-    return gulp.src('./app/font/**/*')
-        .pipe(gulp.dest('./dist/font'))
+    return gulp.src(path.app.fonts)
+        .pipe(gulp.dest(path.dist.fonts))
 });
 
 //copy php files
 gulp.task('copyphp', function(){
-    return gulp.src('./app/*.php')
-        .pipe(gulp.dest('./dist/'))
+    return gulp.src(path.app.php)
+        .pipe(gulp.dest(path.dist.php))
 });
 
 
@@ -47,32 +74,33 @@ gulp.task('copyphp', function(){
 gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
     var assets = useref.assets();
 
-    return gulp.src('./app/*.html')
+    return gulp.src(path.app.html)
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
         .pipe(assets.restore())
         .pipe(useref())
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest(path.dist.html));
 });
 
-//build (minify-html)
+//build (+minify-html)
 gulp.task('build', ['concat'], function() {
     var opts = {
         empty:true,
         conditionals: true,
-        spare:true
+        spare:true,
+        quotes:true
     };
 
 
-    return gulp.src('./dist/*.html')
+    return gulp.src(path.dist.html+'*.html')
         .pipe(minifyHTML(opts))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest(path.dist.html));
 });
 
 //wiredep
 gulp.task('bower', function () {
-    gulp.src('./app/*.html')
+    gulp.src(path.app.html)
         .pipe(wiredep({
             directory: "app/bower_components"
         }))
@@ -90,7 +118,7 @@ gulp.task('bower', function () {
 
 //clean dist
 gulp.task('clean', function () {
-    del('./dist');
+    del(path.clean);
 });
 
 //html
@@ -107,7 +135,7 @@ gulp.task('clean', function () {
 
 //sass
 gulp.task('sass', function () {
-    gulp.src('./app/sass/main.scss')
+    gulp.src(path.app.scss)
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./app/css'));
@@ -116,7 +144,7 @@ gulp.task('sass', function () {
 
 //watch
 gulp.task('watch', function () {
-    gulp.watch('./app/sass/main.scss', ['sass']);
+    gulp.watch(path.watch.scss, ['sass']);
 //    gulp.watch('./app/js/*.js', ['js']);
 //    gulp.watch('./app/*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
