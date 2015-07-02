@@ -19,6 +19,7 @@ var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
+var rigger = require('gulp-rigger');
 
 
 var path = {
@@ -75,6 +76,7 @@ gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
     var assets = useref.assets();
 
     return gulp.src(path.app.html)
+        .pipe(rigger())
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
@@ -97,6 +99,8 @@ gulp.task('build', ['concat'], function() {
         .pipe(minifyHTML(opts))
         .pipe(gulp.dest(path.dist.html));
 });
+
+
 
 //wiredep
 gulp.task('bower', function () {
