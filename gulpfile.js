@@ -19,6 +19,8 @@ var gulpif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
+var rigger = require('gulp-rigger');
+var plumber = require('gulp-plumber');
 
 
 var path = {
@@ -51,6 +53,7 @@ var path = {
 //copy img files
 gulp.task('copyimg', function(){
     return gulp.src(path.app.img)
+        .pipe(plumber())
         .pipe(imagemin({
             progressive: true
         }))
@@ -60,12 +63,14 @@ gulp.task('copyimg', function(){
 //copy font files
 gulp.task('copyfont', function(){
     return gulp.src(path.app.fonts)
+        .pipe(plumber())
         .pipe(gulp.dest(path.dist.fonts))
 });
 
 //copy php files
 gulp.task('copyphp', function(){
     return gulp.src(path.app.php)
+        .pipe(plumber())
         .pipe(gulp.dest(path.dist.php))
 });
 
@@ -75,6 +80,8 @@ gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
     var assets = useref.assets();
 
     return gulp.src(path.app.html)
+        .pipe(plumber())
+        .pipe(rigger())
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
@@ -82,6 +89,9 @@ gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
         .pipe(useref())
         .pipe(gulp.dest(path.dist.html));
 });
+
+
+
 
 //build (+minify-html)
 gulp.task('build', ['concat'], function() {
@@ -94,13 +104,17 @@ gulp.task('build', ['concat'], function() {
 
 
     return gulp.src(path.dist.html+'*.html')
+        .pipe(plumber())
         .pipe(minifyHTML(opts))
         .pipe(gulp.dest(path.dist.html));
 });
 
+
+
 //wiredep
 gulp.task('bower', function () {
     gulp.src(path.app.html)
+        .pipe(plumber())
         .pipe(wiredep({
             directory: "app/bower_components"
         }))
@@ -122,10 +136,12 @@ gulp.task('clean', function () {
 });
 
 //html
-//gulp.task('html', function () {
-//    gulp.src('./app/*.html')
-//        .pipe(connect.reload());
-//});
+/*
+gulp.task('html', function () {
+    gulp.src(path.app.html)
+        .pipe(connect.reload());
+});
+*/
 
 //js
 //gulp.task('js', function(){
@@ -136,6 +152,7 @@ gulp.task('clean', function () {
 //sass
 gulp.task('sass', function () {
     gulp.src(path.app.scss)
+        .pipe(plumber())
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./app/css'));
