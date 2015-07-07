@@ -35,30 +35,28 @@ $(document).ready(function () {
     });
 
 
-    var url=document.location.href;
-    var pos =url.lastIndexOf("/");
-    url = url.substr(pos+1);
+    var url = document.location.href;
+    var pos = url.lastIndexOf("/");
+    url = url.substr(pos + 1);
 
 
-    $('nav ul>li').each(function(index, element){
-        if($(element).hasClass('active')){
-        $(element).removeClass('active');
-    }
+    $('nav ul>li').each(function (index, element) {
+        if ($(element).hasClass('active')) {
+            $(element).removeClass('active');
+        }
         var link = $(element).children('a');
 
-        if(url.length>0){
-            if($(link).attr('href')==url){
+        if (url.length > 0) {
+            if ($(link).attr('href') == url) {
                 $(element).addClass('active');
             }
         } else {
-            if(index==0){
+            if (index == 0) {
                 $(element).addClass('active');
             }
         }
 
     });
-
-
 
 
     /********* Contact form submission code *********/
@@ -162,7 +160,6 @@ $(document).ready(function () {
             }
         });
     });
-
 
 
 });

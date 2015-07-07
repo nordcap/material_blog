@@ -1,11 +1,6 @@
 {
-  "name": "template blog materialize",
+  "name": "template-blog-materialize",
   "version": "1.0.0",
-  "authors": [
-    "nordcap <budaevaa@mail.ru>"
-  ],
-  "description": "",
-  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",

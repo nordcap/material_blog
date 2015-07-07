@@ -1,13 +1,6 @@
 {
-  "name": "template-blog-materialize2",
+  "name": "template-blog-materialize",
   "version": "1.0.0",
-  "description": "template site num 2",
-  "main": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Alex Budaev",
-  "license": "MIT",
   "devDependencies": {
     "del": "^1.2.0",
     "gulp": "^3.9.0",

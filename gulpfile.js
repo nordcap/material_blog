@@ -1,6 +1,3 @@
-/**
- * Created by alex on 02.06.2015.
- */
 "use strict";
 
 
@@ -143,11 +140,6 @@ gulp.task('html', function () {
 });
 */
 
-//js
-//gulp.task('js', function(){
-//    gulp.src('./app/js/*.js')
-//        .pipe(connect.reload());
-//});
 
 //sass
 gulp.task('sass', function () {
@@ -162,7 +154,6 @@ gulp.task('sass', function () {
 //watch
 gulp.task('watch', function () {
     gulp.watch(path.watch.scss, ['sass']);
-//    gulp.watch('./app/js/*.js', ['js']);
 //    gulp.watch('./app/*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
 
