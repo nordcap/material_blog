@@ -1,14 +1,10 @@
 "use strict";
 
-
-
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var del = require('del');
 var minifyCss = require('gulp-minify-css');
 var rename = require("gulp-rename");
-//var livereload = require('livereload');
-//var connect = require('gulp-connect');
 var autoprefixer = require('gulp-autoprefixer');
 var wiredep = require('wiredep').stream;
 var useref = require('gulp-useref');
@@ -22,33 +18,33 @@ var plumber = require('gulp-plumber');
 
 var path = {
     dist: {
-        html:'./dist/',
-        js:'./dist/js/',
-        css:'./dist/css/',
-        img:'./dist/img/',
-        fonts:'./dist/font/',
-        php:'./dist/'
+        html: './dist/',
+        js: './dist/js/',
+        css: './dist/css/',
+        img: './dist/img/',
+        fonts: './dist/font/',
+        php: './dist/'
     },
-    app:{
-        html:'./app/*.html',
-        js:'./app/js/main.js',
-        scss:'./app/sass/main.scss',
-        img:'./app/img/**/*.*',
-        fonts:'./app/font/**/*.*',
-        php:'./app/*.php'
+    app: {
+        html: './app/*.html',
+        js: './app/js/main.js',
+        scss: './app/sass/main.scss',
+        img: './app/img/**/*.*',
+        fonts: './app/font/**/*.*',
+        php: './app/*.php'
     },
-    watch:{
-        html:'./app/**/*.html',
-        js:'./app/js/**/*.js',
-        scss:'./app/sass/**/*.scss',
-        img:'./app/img/**/*.*',
-        fonts:'./app/font/**/*.*'
+    watch: {
+        html: './app/**/*.html',
+        js: './app/js/**/*.js',
+        scss: './app/sass/**/*.scss',
+        img: './app/img/**/*.*',
+        fonts: './app/font/**/*.*'
     },
-    clean:'./dist'
+    clean: './dist'
 };
 
 //copy img files
-gulp.task('copyimg', function(){
+gulp.task('copyimg', function () {
     return gulp.src(path.app.img)
         .pipe(plumber())
         .pipe(imagemin({
@@ -58,14 +54,14 @@ gulp.task('copyimg', function(){
 });
 
 //copy font files
-gulp.task('copyfont', function(){
+gulp.task('copyfont', function () {
     return gulp.src(path.app.fonts)
         .pipe(plumber())
         .pipe(gulp.dest(path.dist.fonts))
 });
 
 //copy php files
-gulp.task('copyphp', function(){
+gulp.task('copyphp', function () {
     return gulp.src(path.app.php)
         .pipe(plumber())
         .pipe(gulp.dest(path.dist.php))
@@ -73,7 +69,7 @@ gulp.task('copyphp', function(){
 
 
 //concat css & js files
-gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
+gulp.task('concat', ['copyimg', 'copyfont', 'copyphp'], function () {
     var assets = useref.assets();
 
     return gulp.src(path.app.html)
@@ -88,24 +84,21 @@ gulp.task('concat', ['copyimg','copyfont', 'copyphp'], function () {
 });
 
 
-
-
 //build (+minify-html)
-gulp.task('build', ['concat'], function() {
+gulp.task('build', ['concat'], function () {
     var opts = {
-        empty:true,
+        empty: true,
         conditionals: true,
-        spare:true,
-        quotes:true
+        spare: true,
+        quotes: true
     };
 
 
-    return gulp.src(path.dist.html+'*.html')
+    return gulp.src(path.dist.html + '*.html')
         .pipe(plumber())
         .pipe(minifyHTML(opts))
         .pipe(gulp.dest(path.dist.html));
 });
-
 
 
 //wiredep
@@ -118,28 +111,11 @@ gulp.task('bower', function () {
         .pipe(gulp.dest('./app'));
 });
 
-//connect
-//gulp.task('connect', function() {
-//    connect.server({
-//        root: 'app',
-//        livereload: true
-//    });
-//});
-
 
 //clean dist
 gulp.task('clean', function () {
     del(path.clean);
 });
-
-//html
-/*
-gulp.task('html', function () {
-    gulp.src(path.app.html)
-        .pipe(connect.reload());
-});
-*/
-
 
 //sass
 gulp.task('sass', function () {
@@ -148,20 +124,18 @@ gulp.task('sass', function () {
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./app/css'));
-//        .pipe(connect.reload());
 });
 
 //watch
 gulp.task('watch', function () {
     gulp.watch(path.watch.scss, ['sass']);
-//    gulp.watch('./app/*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
 
 });
 
 
 //default
-gulp.task('default',['sass','watch']);
+gulp.task('default', ['sass', 'watch']);
 
 
 

@@ -3,8 +3,11 @@ nav ul a {
 
 .slider {
   margin-top: 50px; }
-  .slider .caption {
-    text-shadow: 0 1px 10px #212121; }
+  .slider .slides li {
+    opacity: 1; }
+    .slider .slides li .caption {
+      text-shadow: 0 1px 10px #212121;
+      opacity: 1; }
   .slider .indicators .indicator-item.active {
     background-color: #263238; }
 
@@ -93,9 +96,9 @@ i.mdi-navigation-check {
   .list-logo li {
     position: relative;
     -webkit-box-flex: 0;
-    -webkit-flex: 0 0 135px;
-        -ms-flex: 0 0 135px;
-            flex: 0 0 135px;
+    -webkit-flex: 0 0 100px;
+        -ms-flex: 0 0 100px;
+            flex: 0 0 100px;
     cursor: pointer; }
     .list-logo li a {
       display: block;
@@ -120,8 +123,6 @@ footer.page-footer {
   color: #bdbdbd;
   font-size: 0.85rem;
   padding-top: 0; }
-  footer.page-footer.footer-contact {
-    padding-top: 0; }
   footer.page-footer h6 {
     text-transform: uppercase;
     margin-top: 1.5rem;
