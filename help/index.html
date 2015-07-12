@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Template Documentation Template</title>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+    <style type="text/css" media="screen">
+        p, table, hr, .box {
+            margin-bottom: 25px;
+        }
+
+        .box p {
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            color: greenyellow;
+        }
+
+        .red {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+<body>
+<div class="container">
+
+    <h3 class="center alt">&ldquo;Material Blog&rdquo; Documentation by &ldquo;Alex Budaev&rdquo; v1.0</h3>
+
+    <hr>
+
+    <h1 class="center">&ldquo;Material Blog&rdquo;</h1>
+
+    <div class="borderTop">
+        <div class="span-6 colborder info prepend-1">
+            <p class="prepend-top">
+                <strong>
+                    Created: 12/07/2015<br>
+                    By: Alex Budaev<br>
+                    Email: <a href="mailto:budaev_alex@yahoo.com">budaev_alex@yahoo.com</a>
+                </strong>
+            </p>
+        </div>
+        <!-- end div .span-6 -->
+
+        <div class="span-12 last">
+            <p class="prepend-top append-0">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file,
+                please feel free to email via my user page contact form <a href="http://themeforest.net/user/budaev">here</a>. Thanks so much!</p>
+        </div>
+    </div>
+    <!-- end div .borderTop -->
+
+    <hr>
+
+    <h2 id="toc" class="alt">Table of Contents</h2>
+    <ol class="alpha">
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#build">Build Template</a></li>
+        <li><a href="#htmlStructure">HTML Structure</a></li>
+        <li><a href="#cssFiles">SCSS Files and Structure</a></li>
+        <li><a href="#javascript">JavaScript</a></li>
+        <li><a href="#credits">Sources and Credits</a></li>
+        <li><a href="#">PHP Code Explanation</a> <em class="quiet small">(If your theme uses PHP)</em></li>
+        <li><a href="#">Any additional unique features that need an overview</a></li>
+    </ol>
+
+
+    <hr>
+
+    <h3 id="installation"><strong>A) Installation</strong> - <a href="#toc">top</a></h3>
+
+    <p>For easy working with the template you want to install</p>
+
+    <ol>
+        <li><a href="//nodejs.org/" target="_blank">Install node.js</a></li>
+        <li><a href="//docs.npmjs.com/getting-started/installing-node" target="_blank">Updating npm</a>
+            <pre><code>$ npm install npm -g</code></pre>
+        </li>
+        <li><a href="//bower.io/">Install bower</a>
+            <pre><code>$ npm install -g bower</code></pre>
+        </li>
+        <li><a href="//git-scm.com/downloads">Install git</a></li>
+    </ol>
+
+
+    <hr>
+
+    <h3 id="build"><strong>B) Build Template</strong> - <a href="#toc">top</a></h3>
+
+    <ol>
+        <li>
+            <p>At the command prompt, specify the path to the template directory. <em class="quiet small">(for example in Windows)</em></p>
+            <pre><code>$ cd path-to-directory</code></pre>
+        </li>
+        <li>
+            <p>Before work, run the task &ldquo;default&rdquo;</p>
+            <pre><code>$ gulp</code></pre>
+            or
+            <pre><code>$ gulp default</code></pre>
+        </li>
+        <li>
+            <p>Modify HTML, CSS, JS, IMG files</p>
+        </li>
+        <li>
+            <p>Build the template.</p>
+            <pre><code>$ gulp build</code></pre>
+        </li>
+
+    </ol>
+
+
+    <hr>
+
+    <h3 id="htmlStructure"><strong>C) HTML Structure</strong> - <a href="#toc">top</a></h3>
+
+    <p>This template is a fluid layout with one columns. Some repetitive code placed in external files (Directory <span class="red">&ldquo;./app/template&rdquo;</span>).
+        <br/>This code is connected as follows. </p>
+
+    <pre><code>//= path-to-file</code></pre>
+    e.c.
+    <pre><code>//= template/_head.html</code></pre>
+    <p>The general template structure is the same throughout the template. Here is the general structure.</p>
+    <img src="assets/images/code_structure.png" alt="HTML Structure"/>
+
+
+    <p>If you want to change the color scheme, set the color in the file <span class="red">&ldquo;./app/sass/components/_variables.scss&rdquo;</span>
+    </p>
+
+    <img src="assets/images/theme_color.png" alt="Theme color"/>
+
+    <p>You can also override the color file <span class="red">&ldquo;./app/sass/main.scss&rdquo;</span></p>
+    <pre>nav {
+        background-color: #someColor
+      }</pre>
+
+    <p>If you find that your new style is not overriding, it is most likely because of a specificity problem. Scroll down in your CSS file and make
+        sure that there isn't a similar style that has more weight.</p>
+
+<pre>nav li a {
+        background-color: #someColor
+      }
+</pre>
+
+    <p>So, to ensure that your new styles are applied, make sure that they carry enough "weight" and that there isn't a style lower in the CSS file
+        that is being applied after yours.</p>
+
+    <hr>
+
+    <h3 id="cssFiles"><strong>D) SCSS Files and Structure</strong> - <a href="#toc">top</a></h3>
+
+    <p>I use one SCSS file (main.scss) in this template. This file is compiled into main.css (<span class="red">./app/css/main.css</span>)<br/>
+        Material.css is compiled file <b>Materialize</b> (CSS Framework based on Material Design).<br/>
+        Connect CSS files into <b>_head.html</b> <span class="red">(./app/template/_head.html)</span></p>
+
+    <p><b>Edit CSS files is not recommended.</b> For more control is recommended only change SCSS files.</p>
+
+    <p>Main.scss contains all of the specific stylings for the page. The file is separated into sections using:</p>
+
+<pre>	/* === Header Section === */
+
+	some code
+
+	/* === Main Section === */
+	
+	some code
+	
+
+	/* === Footer === */
+	
+	some code
+
+
+    /* === General === */
+
+	some code
+
+	etc, etc. 
+</pre>
+
+    <p>If you would like to edit a specific section of the site, simply find the appropriate label in the CSS file, and then scroll down until you
+        find the appropriate style that needs to be edited.</p>
+
+
+    <hr>
+
+    <h3 id="javascript"><strong>E) JavaScript</strong> - <a href="#toc">top</a></h3>
+
+    <p>This template imports three Javascript files.</p>
+
+    <ol>
+        <li>jQuery.js</li>
+        <li>Materialize.js</li>
+        <li>Main.js (My custom scripts)</li>
+    </ol>
+
+    <ol>
+        <li>jQuery is a Javascript library that greatly reduces the amount of code that you must write.</li>
+        <li>Materialize is a Javascript library Materialize CSS framework</li>
+        <li>Required for operation of forms and some other effects.</li>
+    </ol>
+
+    <hr>
+
+    <h3 id="credits"><strong>F) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+
+    <p>I've used the following images, icons or other files as listed.
+
+    <ul>
+        <li>Images - (<a href="https://pixabay.com/" target="_blank">https://pixabay.com/</a> and <a href="https://stocksnap.io/" target="_blank">https://stocksnap.io/</a>)</li>
+        <li>Fonts - Font-Awesome (<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank">http://fortawesome.github.io/Font-Awesome/</a>), Roboto (included in Materialize)</li>
+    </ul>
+
+    <hr>
+
+    <p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating
+        to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you
+        might consider visiting the forums and asking your question in the "Item Discussion" section.</p>
+
+    <p class="append-bottom alt large"><strong>Alex Budaev</strong></p>
+
+    <p><a href="#toc">Go To Table of Contents</a></p>
+
+    <hr class="space">
+</div>
+<!-- end div .container -->
+</body>
+</html>

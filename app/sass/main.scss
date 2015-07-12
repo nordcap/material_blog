@@ -1,28 +1,27 @@
-nav {
-  ul a {
-    text-transform: uppercase;
-  }
-}
-
-.slider {
-  margin-top: 50px;
-  .slides {
-    li {
-      opacity: 1;
-      .caption {
-        text-shadow: 0 1px 10px #212121;
-        opacity: 1;
+/* === Header Section === */
+ul.desktop-nav {
+  display: flex;
+  justify-content: center;
+  li {
+    a:hover {
+      color: #4db6ac;
+    }
+    &.active {
+      a {
+        color: #4db6ac;
+        &:hover {
+          color: #4db6ac;
+        }
       }
     }
   }
-
-  .indicators .indicator-item.active {
-    background-color: #263238;
-  }
 }
 
+
+/* === Main Section === */
 main {
   margin-top: 50px;
+  flex: 1 0 auto;
   section {
     border-bottom: 1px dotted gray;
   }
@@ -109,6 +108,8 @@ i.mdi-navigation-check {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+
+/* === Footer === */
 .footer-p {
   padding: 1rem 0;
   border-bottom: 1px dotted gray;
@@ -216,16 +217,6 @@ footer.page-footer {
   }
 }
 
-//Sticky Footer
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main {
-  flex: 1 0 auto;
-}
 
 .list-contact {
   li {
@@ -243,19 +234,6 @@ main {
   display: block;
   text-transform: uppercase;
   font-weight: bold;
-}
-
-.clearfix:before,
-.clearfix:after,
-.row:before,
-.row:after {
-  display: table;
-  content: " ";
-}
-
-.clearfix:after,
-.row:after {
-  clear: both;
 }
 
 .gallery {
@@ -325,23 +303,6 @@ main {
   display: none;
 }
 
-ul.desktop-nav {
-  display: flex;
-  justify-content: center;
-  li {
-    a:hover {
-      color: #4db6ac;
-    }
-    &.active {
-      a {
-        color: #4db6ac;
-        &:hover {
-          color: #4db6ac;
-        }
-      }
-    }
-  }
-}
 
 .card {
   .card-image {
@@ -363,3 +324,42 @@ ul.desktop-nav {
   display: flex;
   justify-content: center;
 }
+
+
+/* === General === */
+nav {
+  ul a {
+    text-transform: uppercase;
+  }
+}
+
+.slider {
+  margin-top: 50px;
+  .slides {
+    li {
+      opacity: 1;
+      .caption {
+        text-shadow: 0 1px 10px #212121;
+        opacity: 1;
+      }
+    }
+  }
+
+  .indicators .indicator-item.active {
+    background-color: #263238;
+  }
+}
+
+
+
+//Sticky Footer
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+
+
+
+

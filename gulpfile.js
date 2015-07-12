@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var del = require('del');
+var clean = require('gulp-clean');
 var minifyCss = require('gulp-minify-css');
 var rename = require("gulp-rename");
 var autoprefixer = require('gulp-autoprefixer');
@@ -14,6 +14,7 @@ var imagemin = require('gulp-imagemin');
 var minifyHTML = require('gulp-minify-html');
 var rigger = require('gulp-rigger');
 var plumber = require('gulp-plumber');
+var runSequence = require('run-sequence');
 
 
 var path = {
@@ -28,6 +29,7 @@ var path = {
     app: {
         html: './app/*.html',
         js: './app/js/main.js',
+        css: './app/css/',
         scss: './app/sass/main.scss',
         img: './app/img/**/*.*',
         fonts: './app/font/**/*.*',
@@ -39,12 +41,13 @@ var path = {
         scss: './app/sass/**/*.scss',
         img: './app/img/**/*.*',
         fonts: './app/font/**/*.*'
-    },
-    clean: './dist'
+    }
 };
 
+
+
 //copy img files
-gulp.task('copyimg', function () {
+gulp.task('copy-img', function () {
     return gulp.src(path.app.img)
         .pipe(plumber())
         .pipe(imagemin({
@@ -54,22 +57,34 @@ gulp.task('copyimg', function () {
 });
 
 //copy font files
-gulp.task('copyfont', function () {
+gulp.task('copy-font', function () {
     return gulp.src(path.app.fonts)
         .pipe(plumber())
         .pipe(gulp.dest(path.dist.fonts))
 });
 
 //copy php files
-gulp.task('copyphp', function () {
+gulp.task('copy-php', function () {
     return gulp.src(path.app.php)
         .pipe(plumber())
         .pipe(gulp.dest(path.dist.php))
 });
 
+//assemble html, concat css & js files
+gulp.task('html', function () {
+    var assets = useref.assets();
 
-//concat css & js files
-gulp.task('concat', ['copyimg', 'copyfont', 'copyphp'], function () {
+    return gulp.src(path.app.html)
+        .pipe(plumber())
+        .pipe(rigger())
+        .pipe(assets)
+        .pipe(assets.restore())
+        .pipe(useref())
+        .pipe(gulp.dest(path.dist.html))
+});
+
+//assemble html, concat css & js files + minify files
+gulp.task('build-html', function () {
     var assets = useref.assets();
 
     return gulp.src(path.app.html)
@@ -84,8 +99,8 @@ gulp.task('concat', ['copyimg', 'copyfont', 'copyphp'], function () {
 });
 
 
-//build (+minify-html)
-gulp.task('build', ['concat'], function () {
+//minify-html
+gulp.task('minify-html', function () {
     var opts = {
         empty: true,
         conditionals: true,
@@ -97,7 +112,7 @@ gulp.task('build', ['concat'], function () {
     return gulp.src(path.dist.html + '*.html')
         .pipe(plumber())
         .pipe(minifyHTML(opts))
-        .pipe(gulp.dest(path.dist.html));
+        .pipe(gulp.dest(path.dist.html))
 });
 
 
@@ -114,7 +129,8 @@ gulp.task('bower', function () {
 
 //clean dist
 gulp.task('clean', function () {
-    del(path.clean);
+    return gulp.src(path.dist.html, {read: false})
+        .pipe(clean());
 });
 
 //sass
@@ -123,19 +139,38 @@ gulp.task('sass', function () {
         .pipe(plumber())
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(gulp.dest('./app/css'));
+        .pipe(gulp.dest(path.app.css));
+
 });
+
 
 //watch
 gulp.task('watch', function () {
-    gulp.watch(path.watch.scss, ['sass']);
-    gulp.watch('bower.json', ['bower']);
 
+    gulp.watch(path.watch.scss, function (event) {
+        runSequence('sass','html');
+    });
+    gulp.watch('bower.json', ['bower']);
+    gulp.watch(path.watch.html, ['html']);
+    gulp.watch(path.watch.js, ['html']);
 });
 
 
 //default
-gulp.task('default', ['sass', 'watch']);
+gulp.task('default', function (callback) {
+    runSequence(
+        'sass',
+        ['copy-img', 'copy-font', 'copy-php'],
+        'html',
+        'watch',
+        callback)});
 
 
-
+//build project
+gulp.task('build', function (callback) {
+    runSequence('clean',
+        'sass',
+        ['copy-img', 'copy-font', 'copy-php'],
+        'build-html',
+        'minify-html',
+        callback)});
